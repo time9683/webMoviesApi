@@ -12,16 +12,21 @@ class AppRow extends  HTMLTableRowElement{
       <td>${this.getAttribute('title')}</td>
       <td>${this.getAttribute('awards')}</td>
       <td>
-        <button id="show">ver</button>
+        <button id="show">Ver</button>
         <button id="remove">Eliminar</button>
       </td>
     `
     // agregar eventos a los botones xd
     this.querySelector("#remove").addEventListener('click', this.appRemove.bind(this))
+    this.querySelector("#show").addEventListener('click', this.appSee.bind(this))
   }
 
   appRemove(){
     this.parent.removeMovie(this.getAttribute('id'))
+  }
+
+  appSee() {
+    this.parent.seeMovie(this.getAttribute('id'))
   }
 
 }
