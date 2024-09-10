@@ -1,3 +1,4 @@
+import { $ } from "./utils"
 export default function updatePlot (movies) {
     // Get the canvas
     const canvas = $('#plot')
