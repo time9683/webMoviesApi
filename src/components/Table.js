@@ -1,6 +1,10 @@
 import { getMovieById } from "../service"
 import { $ } from '../utils.js'
-import { updatePlot } from '../plot.js'
+import  updatePlot  from '../plot.js'
+
+
+const TIME_FETCH = 10
+
 export default class AppTable extends HTMLElement{
 
   /**
@@ -45,9 +49,9 @@ export default class AppTable extends HTMLElement{
     })
 
 
-    this.intervalRef = setInterval(() => {
+    this.intervalRef = setTimeout(() => {
       this.getRandomMovie()
-    }, 10) // TODO: cambiar a 5000
+    }, TIME_FETCH) // TODO: cambiar a 5000
   }
 
   addMovie(movie){
@@ -114,29 +118,46 @@ export default class AppTable extends HTMLElement{
       tbody.appendChild(row)
     })
     // 5. actualizar el canvas
-    updatePlot(showMovies)
+    updatePlot(this.showMovies)
  }
 
-  getRandomMovie(){
+  async getRandomMovie(){
     // la logica ahora es que cada 5 segundos se haga una peticion a la api
     // se genere una id aleatoria entre 1 y 20
     // si la id ya existe en el array de showMovies se vuelve a generar otra id
     // esto se hace de manera recursiva
-
     const id = Math.floor(Math.random() * 20) + 1
-    
-    // TODO: A ternaria
-    // TODO: Recursion stack full when more than 20 movies are shown
-    if(this.showMovies.find(movie => movie.id === id)){
-      return this.getRandomMovie()
-    }
 
-    getMovieById(id).then(movie => {
-      this.addMovie(movie)
-    }).catch(err => {
-      console.error(err)
-    })
+    // obtenemos el array de showMovies
+    const movies = this.showMovies
+
+    // buscamos si la id ya existe en el array de showMovies
+    const  movieIndex = movies.findIndex(movie => parseInt(movie.id) ===  parseInt(id))
+
+    // si la id no existe en el array de showMovies se hace la peticion a la api
+    movieIndex === -1 ? this.getMovie(id) : 
+    // si la id ya existe en el array de showMovies se vuelve a generar otra id solo hasta que existan 20 peliculas en la tabla
+    movies.length < 20 ? this.getRandomMovie() : null
+
   }
+
+  // lo separo porque se ve mas bonito xd
+  getMovie(id){
+    getMovieById(id)
+      .then(movie => {
+      this.addMovie(movie);
+      this.intervalRef = setTimeout(() => {
+        this.getRandomMovie();
+      }, TIME_FETCH);
+      })
+      .catch(err => {
+      console.error(err);
+      });
+  }
+
+
+
 }
 
 customElements.define('app-table', AppTable)
+
