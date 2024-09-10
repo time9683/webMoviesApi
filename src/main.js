@@ -1,8 +1,10 @@
 import '../style.css'
 import "./components/Table.js"
 import "./components/Row.js"
+import "./components/Dialog.js"
 import { $ } from './utils.js'
 
+{/* <dialog id="details"> </dialog> */}
 
 
 $("#app").innerHTML = /*html*/ `

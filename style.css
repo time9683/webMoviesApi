@@ -1,3 +1,54 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+
+@keyframes dialogOpen {
+  0% {
+    opacity: 0.5;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes dialogClose {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+  
+
+
+
+
+
+dialog[open] #child {
+  /* background-color: red; */
+  animation: dialogOpen 0.3s ease-out forwards;
+}
+
+
+
+dialog #child.close{
+  animation: dialogClose 0.3s ease-out forwards;
+}
+
+/* remove backdroop */
+
+dialog::backdrop {
+  background: transparent;
+
+
+
+}
