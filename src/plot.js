@@ -18,6 +18,7 @@ export function updatePlot (movies) {
     const titles = movies.map((movie) => movie.title)
 
     // Plot the data
+    /*
     new Chart(barCanvas, {
         type: 'bar',
         data: {
@@ -35,7 +36,7 @@ export function updatePlot (movies) {
             }  
         }
     })
-
+    */
     new Chart(doughnutCanvas, {
         type: 'doughnut',
         data: {

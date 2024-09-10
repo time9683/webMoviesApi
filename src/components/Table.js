@@ -1,6 +1,6 @@
 import { getMovieById } from "../service"
 import { $ } from '../utils.js'
-import updatePlot from '../plot.js'
+import { updatePlot } from '../plot.js'
 
 
 const TIME_FETCH = 10
@@ -100,7 +100,7 @@ export default class AppTable extends HTMLElement {
       tbody.appendChild(row)
     })
     // 5. actualizar el canvas
-    updatePlot(this.showMovies)
+    updatePlot(moviesToRender)
   }
 
   async getRandomMovie() {
