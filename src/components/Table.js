@@ -1,11 +1,11 @@
 import { getMovieById } from "../service"
 import { $ } from '../utils.js'
-import  updatePlot  from '../plot.js'
+import updatePlot from '../plot.js'
 
 
 const TIME_FETCH = 10
 
-export default class AppTable extends HTMLElement{
+export default class AppTable extends HTMLElement {
 
   /**
    * @type {Array<{id: number, title: string, poster: string, awards: string}>}
@@ -14,12 +14,12 @@ export default class AppTable extends HTMLElement{
   intervalRef = null
   filterInput = null
 
-  constructor(){
-  super()
+  constructor() {
+    super()
   }
 
   // Método que se ejecuta cuando el componente se renderiza en el dom
-  connectedCallback(){
+  connectedCallback() {
     this.innerHTML = /*html*/`
 
     <input class="text-black" type="text" id="filter" placeholder="Buscar por nombre">
@@ -54,63 +54,45 @@ export default class AppTable extends HTMLElement{
     }, TIME_FETCH) // TODO: cambiar a 5000
   }
 
-  addMovie(movie){
+  addMovie(movie) {
     this.showMovies.push(movie)
-    this.render() 
+    this.render()
   }
 
-  removeMovie(id){
+  removeMovie(id) {
     this.showMovies = this.showMovies.filter(movie => movie.id !== parseInt(id))
     this.render()
   }
 
   seeMovie(id) {
-    console.log('hehe')
+    // obtener la pelicula por id
     const movie = this.showMovies.find(movie => movie.id === parseInt(id))
+    // obtener el dialog
+    const appDialog =  $("dialog")
+    // mostrar el dialog
+    appDialog.showModal()
+    // actualizar los datos del dialog
+    appDialog.updateData(movie)
 
-    const details = $("#details")
-    
-    details.innerHTML = /*html*/ `
-    <h1>${movie.title}</h1>
-    <div class="flex justify-center">
-      <img src="${movie.poster}" alt="">
-      <div class="ml-4">
-        <p> Premios: ${movie.awards}</p>
-        <p> Sinopsis: ${movie.plot}</p>
-        <p> Duración: ${movie.runtime} minutos</p>
-        <p> Director: ${movie.director}</p>
-        <p> Actores: ${movie.actors.join(', ')}</p>
-        <p> Rating: ${movie.rating}</p>
-        <p> Género(s): ${movie.genre.join(', ')}</p>
-        <p> País: ${movie.country}</p>
-        <p> Idioma: ${movie.language}</p>
-        <p> Box Office: ${movie.boxOffice}</p>
-        <p> Producción: ${movie.production}</p>
-        <p> Sitio web: ${movie.website}</p>
-      </div>
-    </div>
-    <button onclick="details.close()">Cerrar</button>
-    `
-    details.showModal()
   }
 
   // renderizar los datos en la tabla
-  render(){
+  render() {
     // 1. limpiar el tbody
     const tbody = this.querySelector('tbody')
     tbody.innerHTML = ''
 
     // 2. filtrar los datos si hay algo en el input
-    const moviesToRender = this.filterInput !== null ? 
-    this.showMovies.filter(movie => movie.title.toLowerCase().includes(this.filterInput.toLowerCase())) :
-    this.showMovies
+    const moviesToRender = this.filterInput !== null ?
+      this.showMovies.filter(movie => movie.title.toLowerCase().includes(this.filterInput.toLowerCase())) :
+      this.showMovies
 
     // 3. ordenar los datos por titulo
     const sortMovie = moviesToRender.sort((a, b) => a.title.localeCompare(b.title))
 
     // 4. renderizar los datos
     sortMovie.forEach(movie => {
-      const row = document.createElement('tr', {is: 'app-row'})
+      const row = document.createElement('tr', { is: 'app-row' })
       row.setAttribute('id', movie.id)
       row.setAttribute('title', movie.title)
       row.setAttribute('poster', movie.poster)
@@ -119,9 +101,9 @@ export default class AppTable extends HTMLElement{
     })
     // 5. actualizar el canvas
     updatePlot(this.showMovies)
- }
+  }
 
-  async getRandomMovie(){
+  async getRandomMovie() {
     // la logica ahora es que cada 5 segundos se haga una peticion a la api
     // se genere una id aleatoria entre 1 y 20
     // si la id ya existe en el array de showMovies se vuelve a generar otra id
@@ -132,26 +114,26 @@ export default class AppTable extends HTMLElement{
     const movies = this.showMovies
 
     // buscamos si la id ya existe en el array de showMovies
-    const  movieIndex = movies.findIndex(movie => parseInt(movie.id) ===  parseInt(id))
+    const movieIndex = movies.findIndex(movie => parseInt(movie.id) === parseInt(id))
 
     // si la id no existe en el array de showMovies se hace la peticion a la api
-    movieIndex === -1 ? this.getMovie(id) : 
-    // si la id ya existe en el array de showMovies se vuelve a generar otra id solo hasta que existan 20 peliculas en la tabla
-    movies.length < 20 ? this.getRandomMovie() : null
+    movieIndex === -1 ? this.getMovie(id) :
+      // si la id ya existe en el array de showMovies se vuelve a generar otra id solo hasta que existan 20 peliculas en la tabla
+      movies.length < 20 ? this.getRandomMovie() : null
 
   }
 
   // lo separo porque se ve mas bonito xd
-  getMovie(id){
+  getMovie(id) {
     getMovieById(id)
       .then(movie => {
-      this.addMovie(movie);
-      this.intervalRef = setTimeout(() => {
-        this.getRandomMovie();
-      }, TIME_FETCH);
+        this.addMovie(movie);
+        this.intervalRef = setTimeout(() => {
+          this.getRandomMovie();
+        }, TIME_FETCH);
       })
       .catch(err => {
-      console.error(err);
+        console.error(err);
       });
   }
 
