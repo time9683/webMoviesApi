@@ -61,7 +61,6 @@ export default class AppTable extends HTMLElement{
   }
 
   seeMovie(id) {
-    console.log('hehe')
     const movie = this.showMovies.find(movie => movie.id === parseInt(id))
 
     const details = $("#details")
@@ -96,7 +95,7 @@ export default class AppTable extends HTMLElement{
     const tbody = this.querySelector('tbody')
     tbody.innerHTML = ''
 
-    // 2. filtrar los datos si hay algo en el input
+    // 2. filtrar los datos si hay algo en el input y graficarlos
     const moviesToRender = this.filterInput !== null ? 
     this.showMovies.filter(movie => movie.title.toLowerCase().includes(this.filterInput.toLowerCase())) :
     this.showMovies
@@ -113,8 +112,9 @@ export default class AppTable extends HTMLElement{
       row.setAttribute('awards', movie.awards)
       tbody.appendChild(row)
     })
-    // 5. actualizar el canvas
-    updatePlot(showMovies)
+
+    // 5. graficar los datos
+    updatePlot(sortMovie)
  }
 
   getRandomMovie(){
