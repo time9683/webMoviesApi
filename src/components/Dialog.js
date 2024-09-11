@@ -87,7 +87,7 @@ class AppDialog extends HTMLDialogElement{
           
           <!-- Modal Footer -->
           <div class="p-6 border-t border-gray-200 flex justify-end">
-            <button id="close" class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400">Close</button>
+            <button id="close" class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400">Cerrar</button>
           </div>
         </div>
       </div>

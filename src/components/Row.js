@@ -12,8 +12,9 @@ class AppRow extends  HTMLTableRowElement{
       <td>${this.getAttribute('title')}</td>
       <td>${this.getAttribute('awards')}</td>
       <td>
-        <button id="show">Ver</button>
-        <button id="remove">Eliminar</button>
+        <button id="show" class="mb-2 w-full px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400">Ver</button>
+        <br>
+        <button id="remove" class="px-4 w-full py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400">Eliminar</button>
       </td>
     `
     // agregar eventos a los botones xd

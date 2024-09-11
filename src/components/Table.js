@@ -21,11 +21,15 @@ export default class AppTable extends HTMLElement {
   // Método que se ejecuta cuando el componente se renderiza en el dom
   connectedCallback() {
     this.innerHTML = /*html*/`
+    <div class="text-center pb-6">
+      <input class="text-black bg-gray-50 rounded-md border-[1px] 
+                    border-gray-200 hover:border-gray-400 w-1/4 
+                    focus:outline-none focus:ring-2 focus:ring-gray-400" 
+             type="text" id="filter" placeholder=" Buscar por nombre">
+    </div>
 
-    <input class="text-black" type="text" id="filter" placeholder="Buscar por nombre">
-
-      <table>
-      <thead>
+    <table class="bg-gray-50 rounded-lg">
+      <thead class="border-b-[1px] border-gray-200">
         <tr>
           <th>ID</th>
           <th>Póster</th>
@@ -38,7 +42,7 @@ export default class AppTable extends HTMLElement {
 
       <tbody>
       </tbody>
-      </table>
+    </table>
     `
     this.input = this.querySelector('#filter')
 
@@ -97,6 +101,7 @@ export default class AppTable extends HTMLElement {
       row.setAttribute('title', movie.title)
       row.setAttribute('poster', movie.poster)
       row.setAttribute('awards', movie.awards)
+      row.setAttribute('class', "border-b-[1px] border-gray-100 hover:font-semibold")
       tbody.appendChild(row)
     })
     // 5. actualizar el canvas

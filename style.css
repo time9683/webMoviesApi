@@ -3,7 +3,20 @@
 @tailwind utilities;
 
 
+th {
+  color: black;
+  padding: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
 
+td {
+  color: rgb(47, 47, 47);
+  padding:0.5rem;
+  padding-top: 0;
+  padding-bottom: 0;
+  text-align: center;
+}
 
 @keyframes dialogOpen {
   0% {

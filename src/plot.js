@@ -19,7 +19,7 @@ export function updatePlot (movies) {
         data: {
             labels: titles,
             datasets: [{
-                label: 'Premios',
+                label: 'Óscars',
                 data: awards
             }]
         },
