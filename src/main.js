@@ -17,7 +17,7 @@ $("#app").innerHTML = /*html*/ `
         <canvas id="barPlot" class="w-10"></canvas>
     </div> -->
     <div class="w-2/4">
-        <canvas id="doughnutPlot" class="w-10"></canvas>
+        <canvas id="plotCanvas" class="w-10"></canvas>
     </div>
 </div>
 <app-table class=""></app-table>
