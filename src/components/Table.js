@@ -1,9 +1,9 @@
 import { getMovieById } from "../service"
-import { $ } from '../utils.js'
+import { $, GetFromLocalStorage, SaveToLocalStorage } from '../utils.js'
 import { updatePlot } from '../plot.js'
 
 
-const TIME_FETCH = 10
+const TIME_FETCH = 1000
 
 export default class AppTable extends HTMLElement {
 
@@ -16,6 +16,9 @@ export default class AppTable extends HTMLElement {
 
   constructor() {
     super()
+    const data = GetFromLocalStorage()
+    this.showMovies =  data
+    console.log(data)
   }
 
   // Método que se ejecuta cuando el componente se renderiza en el dom
@@ -53,9 +56,16 @@ export default class AppTable extends HTMLElement {
     })
 
 
+    window.addEventListener("storage",()=>{
+      console.log("updated")
+      this.showMovies = GetFromLocalStorage()
+      this.render()
+    })
+
     this.intervalRef = setTimeout(() => {
       this.getRandomMovie()
     }, TIME_FETCH) // TODO: cambiar a 5000
+    this.render()
   }
 
   addMovie(movie) {
@@ -75,6 +85,7 @@ export default class AppTable extends HTMLElement {
     const appDialog =  $("dialog")
     // mostrar el dialog
     appDialog.showModal()
+    document.body.style.overflow = 'hidden'
     // actualizar los datos del dialog
     appDialog.updateData(movie)
 
@@ -82,6 +93,11 @@ export default class AppTable extends HTMLElement {
 
   // renderizar los datos en la tabla
   render() {
+    //  0. guardar los datos en el localstorage
+    SaveToLocalStorage(this.showMovies)
+  //  si no hay datos en el array, se vuelve a generar petición a la api
+    this.showMovies.length  === 0 ? this.getRandomMovie() : null
+
     // 1. limpiar el tbody
     const tbody = this.querySelector('tbody')
     tbody.innerHTML = ''
