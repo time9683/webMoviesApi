@@ -28,9 +28,7 @@ export async function getMovieById(movieId) {
 
   const res = await fetch(API_URL+`/${movieId}`);
 
-  if (!res.ok) {
-    throw new Error('Failed to fetch movies');
-  }
+  return res.ok ? res.json()  : Promise.reject(res.statusText);
 
-  return res.json();
+
 }
