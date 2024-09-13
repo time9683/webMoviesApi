@@ -18,6 +18,10 @@ td {
   text-align: center;
 }
 
+img {
+  width: 8rem;
+}
+
 @keyframes dialogOpen {
   0% {
     opacity: 0.5;

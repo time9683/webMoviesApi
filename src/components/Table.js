@@ -3,7 +3,7 @@ import { $ } from '../utils.js'
 import { updatePlot } from '../plot.js'
 
 
-const TIME_FETCH = 10
+const TIME_FETCH = 1000
 
 export default class AppTable extends HTMLElement {
 
