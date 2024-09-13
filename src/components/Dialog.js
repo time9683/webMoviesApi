@@ -94,11 +94,7 @@ class AppDialog extends HTMLDialogElement{
     `
     this.querySelector("#close").addEventListener('click',this.closeDialog.bind(this))
   // detect esc key
-    this.addEventListener('keydown',event=>{
-      if(event.key === 'Escape'){
-        this.closeDialog(event)
-      }
-    })
+    this.addEventListener('keydown', event => event.key === 'Escape' ? this.closeDialog(event) : null);
   }
 
   closeDialog(event){
