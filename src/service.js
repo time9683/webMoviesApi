@@ -1,4 +1,4 @@
-const API_URL = 'https://freetestapi.com/api/v1/movies';
+const API_URL = '/movies.json';
 
 
 // get movie By Id
@@ -25,10 +25,10 @@ const API_URL = 'https://freetestapi.com/api/v1/movies';
  * }>}
  */
 export async function getMovieById(movieId) {
-
-  const res = await fetch(API_URL+`/${movieId}`);
-
-  return res.ok ? res.json()  : Promise.reject(res.statusText);
+  const res = await fetch(API_URL)
+  const data = await res.json()
+  const info = data.find(movie => movie.id === movieId)
+  return res.ok ? info : Promise.reject(res.statusText);
 
 
 }

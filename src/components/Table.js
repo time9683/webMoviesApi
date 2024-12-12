@@ -3,7 +3,7 @@ import { $, GetFromLocalStorage, SaveToLocalStorage } from '../utils.js'
 import { updatePlot } from '../plot.js'
 
 
-const TIME_FETCH = 5000
+const TIME_FETCH = 1000
 
 export default class AppTable extends HTMLElement {
 
@@ -105,6 +105,7 @@ export default class AppTable extends HTMLElement {
       this.showMovies
 
     // 3. ordenar los datos por titulo
+    console.log(moviesToRender)
     const sortMovie = moviesToRender.sort((a, b) => a.title.localeCompare(b.title))
 
     // 4. renderizar los datos
