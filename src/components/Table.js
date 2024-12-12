@@ -3,7 +3,7 @@ import { $, GetFromLocalStorage, SaveToLocalStorage } from '../utils.js'
 import { updatePlot } from '../plot.js'
 
 
-const TIME_FETCH = 1000
+const TIME_FETCH = 5000
 
 export default class AppTable extends HTMLElement {
 
