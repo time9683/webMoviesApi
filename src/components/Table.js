@@ -3,7 +3,7 @@ import { $, GetFromLocalStorage, SaveToLocalStorage } from '../utils.js'
 import { updatePlot } from '../plot.js'
 
 
-const TIME_FETCH = 1000
+const TIME_FETCH = 5000
 
 export default class AppTable extends HTMLElement {
 
@@ -18,7 +18,7 @@ export default class AppTable extends HTMLElement {
     super()
     const data = GetFromLocalStorage()
     this.showMovies =  data
-    console.log(data)
+    // console.log(data)
   }
 
   // Método que se ejecuta cuando el componente se renderiza en el dom
@@ -57,7 +57,7 @@ export default class AppTable extends HTMLElement {
 
 
     window.addEventListener("storage",()=>{
-      console.log("updated")
+      // console.log("updated")i
       this.showMovies = GetFromLocalStorage()
       this.render()
     })
@@ -75,6 +75,7 @@ export default class AppTable extends HTMLElement {
 
   removeMovie(id) {
     this.showMovies = this.showMovies.filter(movie => movie.id !== parseInt(id))
+    this.showMovies.length  === 0 ? setTimeout(()=>{ this.getRandomMovie()},5000) : null
     this.render()
   }
 
@@ -85,7 +86,6 @@ export default class AppTable extends HTMLElement {
     const appDialog =  $("dialog")
     // mostrar el dialog
     appDialog.showModal()
-    document.body.style.overflow = 'hidden'
     // actualizar los datos del dialog
     appDialog.updateData(movie)
 
@@ -95,9 +95,6 @@ export default class AppTable extends HTMLElement {
   render() {
     //  0. guardar los datos en el localstorage
     SaveToLocalStorage(this.showMovies)
-  //  si no hay datos en el array, se vuelve a generar petición a la api
-    this.showMovies.length  === 0 ? this.getRandomMovie() : null
-
     // 1. limpiar el tbody
     const tbody = this.querySelector('tbody')
     tbody.innerHTML = ''
